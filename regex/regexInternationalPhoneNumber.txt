@@ -1,0 +1,46 @@
+# This was an answer to a question with fairly specific requirements. 
+
+# I need a regex to validate a phone number (With country code )which shall follow the below conditions
+
+# 1  There should be at max 4 digits in between + and - . 
+# 2  Phone number shall be a combination of +,- and digits
+# 3  0 shall not be allowed after - 
+# 4  After - only 10 digits are allowed
+
+# I wrote this: 
+
+\+\d{1,4}-(?!0)\d{1,10}\b
+
+\+                        Match a literal +
+\d{1,4}                   Match between 1 and 4 digits inclusive
+-                         Match a literal -
+(?!                       Negative lookahead, fail if
+  0                       this token (literal 0) is found
+)
+\d{1,10}                  Match between 1 and 10 digits inclusive
+\b                        Match a word boundary
+
+// And an example in JavaScript
+
+var phoneRegexp = /\+\d{1,4}-(?!0)\d{1,10}\b/g,
+  tests = [
+    '+91234-1234567',
+    '+9123-1234567',
+    '+',
+    '-',
+    '91234545555',
+    '+91-012345',
+    '+91-12345678910'
+  ],
+  results = [],
+  expected = [false, true, false, false, false, false, false];
+
+results = tests.map(function(el) {
+  return phoneRegexp.test(el);
+});
+
+for (var i = 0; i < results.length; i++) {
+  document.getElementById('result').textContent += (results[i] === expected[i]) + ', ';
+}
+
+// output is true, true, true, true, true, true, true, 

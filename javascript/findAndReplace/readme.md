@@ -1,0 +1,1 @@
+Demonstrates simple find and replace functionality with JavaScript

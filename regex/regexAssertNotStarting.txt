@@ -1,0 +1,9 @@
+# This regular expression asserts that a given string doesn't begin 
+# with a ! or = literal.
+
+(?![!=]).*
+
+(?!                       // Negative lookahead
+    [!=]                  // Match either ! or = literal
+)
+.*                        // Match any token zero to unlimited times
